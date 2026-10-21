@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Happy Birthday Moon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Dancing+Script:wght@600&family=Great+Vibes&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="Css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+<section class="countdown-screen" id="countdownScreen" aria-labelledby="countdownTitle" hidden>
+  <div class="countdown-card">
+    <p class="countdown-eyebrow">✦ A LITTLE COUNTDOWN TO A BIG DAY ✦</p>
+    <h1 id="countdownTitle">Turn Up the Music 🎶</h1>
+    <p class="countdown-intro">Please keep your phone’s sound ON and feel the music.</p>
+    <p class="countdown-intro">If possible, put on your headphones for the best experience.</p>
+    <h1 id="countdownTitle">🎧</h1>
+    <div class="countdown-grid" aria-label="Time until the birthday">
+      <div class="countdown-unit"><span id="countDays">00</span><small>DAYS</small></div>
+      <div class="countdown-unit"><span id="countHours">00</span><small>HOURS</small></div>
+      <div class="countdown-unit"><span id="countMinutes">00</span><small>MINUTES</small></div>
+      <div class="countdown-unit"><span id="countSeconds">00</span><small>SECONDS</small></div>
+    </div>
+    <p class="countdown-footer" id="countdownFooter">Your magical day is almost here!</p>
+    <button class="countdown-skip" id="countdownSkip" type="button">Skip timer (temporary)</button>
+  </div>
+</section>
+<div id="birthdayContent" hidden inert>
+<div class="sky" aria-hidden="true"></div>
+<div class="moon" aria-hidden="true"></div>
+<div class="cloud c1" aria-hidden="true"></div>
+<div class="cloud c2" aria-hidden="true"></div>
+<canvas id="bg" aria-hidden="true"></canvas>
+<div class="hills" aria-hidden="true"></div>
+
+<header class="hero">
+  <img class="bunting" src="img/banner.png" alt="Happy birthday bunting">
+  <div class="portrait tilt" data-depth="1">
+    <img src="img/user.png" alt="Tuntuni">
+    <i class="spark s1">✦</i><i class="spark s2">✧</i><i class="spark s3">✦</i><i class="spark s4">✧</i>
+  </div>
+  <h1 class="typewrap" aria-live="polite"><span id="typewriter"></span><i class="cursor" aria-hidden="true"></i></h1>
+  <p class="hero-name">Tuntuni</p>
+  <p class="hero-sub">I love you 🥰</p>
+  <a class="scroll-hint" href="#letter" aria-label="Scroll to your letter">scroll down</a>
+</header>
+
+<main>
+  <section class="wrap" id="letter" data-r>
+    <div class="letter tilt">
+      <span class="heart" aria-hidden="true">❤️</span>
+      <h2>Hello, Tuntuni</h2>
+      <p style="--d:.1s">hi, im <strong>Bittu</strong> 🍂</p>
+      <p style="--d:.25s">wishing you a very <mark>happy birthday 🎉</mark></p>
+      <p style="--d:.4s">ive created something special just for you, scroll down and enjoy the surprises! 🍁</p>
+      <p style="--d:.55s">may your day be filled with happiness, laughter, and sweet memories 🌺</p>
+      <p style="--d:.7s">you deserve all the love and joy in the world, and i hope this birthday is as wonderful as you are 🌸</p>
+      <p style="--d:.85s">so, here’s to you, Tuntuni, on your special day! may it be filled with love, laughter, and all the things that make you smile 🌷</p>
+      <p style="--d:1s">Tuntuni! may this year bring you endless joy, success, and beautiful surprises 🌹</p>
+      <p style="--d:1.15s">I Love you Moon ❤️ Forever & Ever</p>
+      <p style="--d:1.15s">
+    </div>
+  </section>
+
+  <section class="cake-sec wrap" data-r>
+    <div class="cake-stage"><span class="ring"></span><img class="cake" src="img/cake.svg" alt="Birthday cake"></div>
+    <button class="pill" id="wishBtn" type="button" onclick="const msg=document.getElementById('wishMsg');msg.textContent='তোমার সব ইচ্ছে পূরণ হোক Tuntuni —শুভ জন্মদিন, অনেক অনেক ভালোবাসা রইলো ❤️';msg.classList.add('pop');const blessId=blessMoon();if(typeof confetti==='function'){const shower=confetti({particleCount:120,spread:90,origin:{y:.7},colors:['#ffd27a','#ff7eb6','#7fe7ff','#ffffff']});if(shower&&shower.then)shower.then(()=>unblessMoon(blessId));else setTimeout(()=>unblessMoon(blessId),4000)}else setTimeout(()=>unblessMoon(blessId),4000)">Make a wish</button>
+    <p class="wish" id="wishMsg" aria-live="polite"></p>
+  </section>
+
+  <section class="memories wrap" data-r>
+    <h2 class="sec-title">Our old memories</h2>
+    <div class="stack" id="stack" aria-label="Photo memories">
+      <figure class="polaroid"><img src="img/1.jpg" alt="Our memory 1" draggable="false"><figcaption>my favorite person ❤️</figcaption></figure>
+      <figure class="polaroid"><img src="img/2.png" alt="Our memory 2" draggable="false"><figcaption>My Heroine</figcaption></figure>
+      <figure class="polaroid"><img src="img/3.png" alt="Our memory 3" draggable="false"><figcaption>My Terror</figcaption></figure>
+      <figure class="polaroid"><img src="img/4.jpg" alt="Our memory 4" draggable="false"><figcaption>My Poetess </figcaption></figure>
+      <figure class="polaroid"><img src="img/5.jpg" alt="Our memory 5" draggable="false"><figcaption>my heart, my home</figcaption></figure>
+      <figure class="polaroid"><img src="img/6.png" alt="Our memory 6" draggable="false"><figcaption>Colgate Smile ❤️</figcaption></figure>
+      <figure class="polaroid"><img src="img/7.png" alt="Our memory 7" draggable="false"><figcaption>my sweetest Girl</figcaption></figure>
+      <figure class="polaroid"><img src="img/8.png" alt="Our memory 8" draggable="false"><figcaption>As beautiful as a rose</figcaption></figure>
+      <figure class="polaroid"><img src="img/9.png" alt="Our memory 9" draggable="false"><figcaption>My Don</figcaption></figure>
+      <figure class="polaroid"><img src="img/10.png" alt="Our memory 10" draggable="false"><figcaption>You are my everything</figcaption></figure>
+      <figure class="polaroid"><img src="img/11.png" alt="Our memory 11" draggable="false"><figcaption>You look like my queen in a saree</figcaption></figure>
+      <figure class="polaroid"><img src="img/12.jpg" alt="Our memory 12" draggable="false"><figcaption>Candid ❤️ Tuntuni</figcaption></figure>
+      <figure class="polaroid"><img src="img/13.png" alt="Our memory 13" draggable="false"><figcaption>My beautiful wife ❤️</figcaption></figure>
+      <figure class="polaroid"><img src="img/14.png" alt="Our memory 14" draggable="false"><figcaption>My Rotlu Baccha 😂 </figcaption></figure>
+      <figure class="polaroid"><img src="img/15.png" alt="Our memory 15" draggable="false"><figcaption>My World ❤️</figcaption></figure>
+      <figure class="polaroid"><img src="img/16.png" alt="Our memory 16" draggable="false"><figcaption>Sundori ❤️</figcaption></figure>
+      <figure class="polaroid"><img src="img/17.png" alt="Our memory 17" draggable="false"><figcaption>Billu Rani</figcaption></figure>
+    </div>
+    <div class="ctrl">
+      <button id="prevImg" class="round" aria-label="Previous photo">‹</button>
+      
+      <button id="nextImg" class="round" aria-label="Next photo">›</button>
+    </div>
+  </section>
+
+  <section class="final wrap" data-r>
+    <h2 class="sec-title">Final message</h2>
+    <div class="card-wrap tilt" id="cardContainer">
+      <div class="card" id="card">
+        <div class="side front">
+          <h3>Happy Birthday</h3>
+          <p>Tap the button to open this card</p>
+          <img src="img/cake.svg" alt="">
+          <button class="pill dark" id="toggleButton" type="button" onclick="event.stopPropagation();const card=document.getElementById('card');const open=card.classList.toggle('flipped');this.textContent=open?'Close card':'Open card';this.setAttribute('aria-expanded',String(open))">Open card</button>
+        </div>
+        <div class="side back">
+          <h3>শুভ জন্মদিন, আমার মুন ❤️🌙</h3>
+          <p>আমার টুনটুনি, তোমার জীবন ভরে উঠুক অফুরন্ত ভালোবাসা, হাসি আর সুখে। তোমার প্রতিটি স্বপ্ন সত্যি হোক, আর তোমার মুখের মিষ্টি হাসিটা চিরকাল অমলিন থাকুক।
+
+আমার ভুলে কষ্ট পেয়ে থাকলে, মন থেকে দুঃখিত, বাবু সোনা। তোমাকে আরও বেশি ভালোবাসা আর যত্ন দিয়ে আগলে রাখতে চাই।</p>
+          <p>অনেক অনেক ভালোবাসা রইল, আমার Sona Moon. </p>
+          <p>I Love You, Moon. ❤️</p>
+          <p>Forever & Ever ♾️</p>
+          <p>💖 তোমার Bolod Bittu 💖</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot" data-r>
+  <p>😇 Thank you for being with me, my Queen 😇</p>
+  <small>Created with Love 💖 by Your Bolod Bittu</small>
+</footer>
+<div id="lanterns" aria-hidden="true"></div>
+<div class="music-widget">
+  <div class="music-popup" id="musicPopup" hidden>
+    <div class="music-heading"><span class="music-note">♫</span><span><strong>অভিমানী চাঁদ</strong><small>just for you 💖</small></span><span class="music-equalizer" aria-hidden="true"><i></i><i></i><i></i><i></i></span></div>
+    <audio id="backgroundMusic" src="Song.mp3" loop preload="auto" aria-label="Birthday background music"></audio>
+    <div class="music-controls">
+      <button class="music-play" id="musicPlay" type="button" aria-label="Play music">▶</button>
+      <div class="music-timeline"><div class="music-times"><span id="musicCurrent">0:00</span><span id="musicDuration">0:00</span></div><input id="musicSeek" type="range" min="0" max="100" value="0" aria-label="Seek through song"></div>
+    </div>
+    <div class="music-volume"><span aria-hidden="true">♪</span><input id="musicVolume" type="range" min="0" max="1" step="0.01" value="0.7" aria-label="Music volume"><span aria-hidden="true">♫</span></div>
+  </div>
+  <button class="music-toggle" id="musicToggle" type="button" aria-label="Open music controls" aria-expanded="false" onclick="const player=document.getElementById('musicPopup'),audio=document.getElementById('backgroundMusic'),open=player.hidden;player.hidden=!open;this.setAttribute('aria-expanded',String(open));if(open&&audio.paused)audio.play().catch(()=>{})"><img src="img/Oviman.png?rev=2" alt=""></button>
+</div>
+<script src="background.js"></script>
+<script src="main.js"></script>
+<script>
+window.blessMoon=()=>{const moon=document.querySelector('.moon');moon.classList.add('blessed');return window.moonBlessToken=(window.moonBlessToken||0)+1;};
+window.unblessMoon=id=>{if(id===window.moonBlessToken)document.querySelector('.moon').classList.remove('blessed');};
+(() => {
+  const audio=document.getElementById('backgroundMusic');
+  const play=document.getElementById('musicPlay');
+  const seek=document.getElementById('musicSeek');
+  const volume=document.getElementById('musicVolume');
+  const current=document.getElementById('musicCurrent');
+  const duration=document.getElementById('musicDuration');
+  const clock=value=>{if(!Number.isFinite(value))return '0:00';const m=Math.floor(value/60),s=Math.floor(value%60);return `${m}:${String(s).padStart(2,'0')}`;};
+  const paint=()=>{play.innerHTML=audio.paused?'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.8c0-.8.9-1.3 1.6-.9l10 6.2a1 1 0 0 1 0 1.8l-10 6.2c-.7.4-1.6-.1-1.6-.9z"/></svg>':'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM15 5h4v14h-4z"/></svg>';play.setAttribute('aria-label',audio.paused?'Play music':'Pause music');};
+  audio.volume=Number(volume.value);
+  // Begin buffering the track as soon as the page loads, even while the countdown is shown.
+  audio.load();
+  play.addEventListener('click',()=>audio.paused?audio.play().catch(()=>{}):audio.pause());
+  audio.addEventListener('play',paint);audio.addEventListener('pause',paint);
+  audio.addEventListener('loadedmetadata',()=>{seek.max=audio.duration||100;duration.textContent=clock(audio.duration);});
+  audio.addEventListener('timeupdate',()=>{seek.value=audio.currentTime;current.textContent=clock(audio.currentTime);});
+  seek.addEventListener('input',()=>{audio.currentTime=Number(seek.value);});
+  volume.addEventListener('input',()=>{audio.volume=Number(volume.value);audio.muted=audio.volume===0;});
+  window.startBirthdayMusic=()=>{
+    audio.play().catch(()=>{});
+  };
+})();
+</script>
+</div>
+<script>
+(() => {
+  // Unlock at midnight on 28 October 2026 in India Standard Time.
+  const unlockAt = Date.parse('2026-10-28T00:00:00+05:30');
+  const countdown = document.getElementById('countdownScreen');
+  const birthday = document.getElementById('birthdayContent');
+  const fields = ['Days', 'Hours', 'Minutes', 'Seconds'].map(unit => document.getElementById(`count${unit}`));
+  const skipButton = document.getElementById('countdownSkip');
+  const pad = value => String(value).padStart(2, '0');
+
+  let skipped = false;
+  let countdownTimer;
+  function updateCountdown() {
+    const remaining = skipped ? 0 : unlockAt - Date.now();
+    if (remaining <= 0) {
+      countdown.hidden = true;
+      birthday.hidden = false;
+      birthday.inert = false;
+      document.body.classList.remove('countdown-mode');
+      window.startBirthdayMusic?.();
+      if (countdownTimer) clearInterval(countdownTimer);
+      return;
+    }
+    document.body.classList.add('countdown-mode');
+    countdown.hidden = false;
+    birthday.hidden = true;
+    birthday.inert = true;
+    let seconds = Math.floor(remaining / 1000);
+    const days = Math.floor(seconds / 86400); seconds %= 86400;
+    const hours = Math.floor(seconds / 3600); seconds %= 3600;
+    const minutes = Math.floor(seconds / 60); seconds %= 60;
+    [days, hours, minutes, seconds].forEach((value, index) => { fields[index].textContent = pad(value); });
+  }
+
+  skipButton.addEventListener('click', () => { skipped = true; updateCountdown(); });
+  updateCountdown();
+  countdownTimer = setInterval(updateCountdown, 1000);
+})();
+</script>
+</body>
+</html>
