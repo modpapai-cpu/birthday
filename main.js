@@ -1,6 +1,39 @@
 const $=s=>document.querySelector(s);
 
 (function(){
+  const button=$('#wishBtn'),msg=$('#wishMsg');
+  if(!button||!msg)return;
+  const text='তোমার সব ইচ্ছে পূরণ হোক Tuntuni —শুভ জন্মদিন, অনেক অনেক ভালোবাসা রইলো ❤️';
+  const letters=typeof Intl.Segmenter==='function'
+    ? [...new Intl.Segmenter('bn',{granularity:'grapheme'}).segment(text)].map(part=>part.segment)
+    : Array.from(text);
+  let timer,run=0;
+  button.addEventListener('click',()=>{
+    const activeRun=++run;
+    clearTimeout(timer);
+    msg.textContent='';
+    msg.classList.remove('pop');
+    void msg.offsetWidth;
+    msg.classList.add('pop','typing');
+    let index=0;
+    const typeNext=()=>{
+      if(activeRun!==run)return;
+      if(index>=letters.length){msg.classList.remove('typing');return;}
+      msg.textContent+=letters[index++];
+      timer=setTimeout(typeNext,55);
+    };
+    typeNext();
+
+    const blessId=window.blessMoon?.();
+    if(typeof confetti==='function'){
+      const shower=confetti({particleCount:120,spread:90,origin:{y:.7},colors:['#ffd27a','#ff7eb6','#7fe7ff','#ffffff']});
+      if(shower&&shower.then)shower.then(()=>window.unblessMoon?.(blessId));
+      else setTimeout(()=>window.unblessMoon?.(blessId),4000);
+    }else setTimeout(()=>window.unblessMoon?.(blessId),4000);
+  });
+})();
+
+(function(){
   const el=$('#typewriter'),text='Happy Birthday',sleep=ms=>new Promise(r=>setTimeout(r,ms));
   (async function loop(){
     await sleep(1500);
@@ -18,6 +51,24 @@ const $=s=>document.querySelector(s);
   if(!('IntersectionObserver' in window)){els.forEach(e=>e.classList.add('in'));return;}
   const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.15});
   els.forEach(e=>io.observe(e));
+})();
+
+(function(){
+  const birthday=$('#birthdayContent'),sections=[$('#letter'),$('.memories'),$('.final'),$('.foot')].filter(Boolean);
+  let currentScene='';
+  const update=()=>{
+    if(birthday.hidden)return;
+    const inFocus=element=>{const rect=element.getBoundingClientRect();return rect.top<innerHeight*.7&&rect.bottom>innerHeight*.3;};
+    const atEnd=scrollY+innerHeight>=document.documentElement.scrollHeight-40;
+    const scene=atEnd||inFocus(sections[3])?'end':inFocus(sections[0])?'letter':inFocus(sections[1])?'memory':inFocus(sections[2])?'card':'hero';
+    if(scene===currentScene)return;
+    currentScene=scene;
+    window.setMoonAnimation?.(scene);
+  };
+  window.updateMoonScene=update;
+  addEventListener('scroll',update,{passive:true});
+  addEventListener('resize',update);
+  if('IntersectionObserver' in window)sections.forEach(section=>new IntersectionObserver(update,{threshold:0}).observe(section));
 })();
 
 (function(){

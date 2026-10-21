@@ -7,16 +7,22 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Dancing+Script:wght@600&family=Great+Vibes&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="Css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 </head>
 <body>
 <section class="countdown-screen" id="countdownScreen" aria-labelledby="countdownTitle" hidden>
-  <div class="countdown-card">
-    <p class="countdown-eyebrow">✦ A LITTLE COUNTDOWN TO A BIG DAY ✦</p>
-    <h1 id="countdownTitle">Turn Up the Music 🎶</h1>
+  <div class="countdown-card countdown-intro-card">
+    
+    <h1 id="countdownTitle">Turn Up the Music <span class="countdown-music-note" id="countdownMusicNote" aria-hidden="true"><span class="countdown-music-fallback">🎶</span></span></h1>
     <p class="countdown-intro">Please keep your phone’s sound ON and feel the music.</p>
     <p class="countdown-intro">If possible, put on your headphones for the best experience.</p>
     <h1 id="countdownTitle">🎧</h1>
+  </div>
+  
+  <div class="countdown-card countdown-timer-card" id="countdownTimerCard">
+    <p class="countdown-eyebrow">✦ A LITTLE COUNTDOWN TO A BIG DAY ✦</p>
+    <br>
     <div class="countdown-grid" aria-label="Time until the birthday">
       <div class="countdown-unit"><span id="countDays">00</span><small>DAYS</small></div>
       <div class="countdown-unit"><span id="countHours">00</span><small>HOURS</small></div>
@@ -24,12 +30,14 @@
       <div class="countdown-unit"><span id="countSeconds">00</span><small>SECONDS</small></div>
     </div>
     <p class="countdown-footer" id="countdownFooter">Your magical day is almost here!</p>
-    <button class="countdown-skip" id="countdownSkip" type="button">Skip timer (temporary)</button>
+  </div>
+  <div class="countdown-card countdown-action-card" id="countdownActionCard" hidden>
+    <button class="countdown-skip" id="countdownOk" type="button" aria-label="OK"><span class="countdown-ok-arrow" id="countdownOkArrow" aria-hidden="true"><span class="countdown-ok-fallback">→</span></span></button>
   </div>
 </section>
 <div id="birthdayContent" hidden inert>
 <div class="sky" aria-hidden="true"></div>
-<div class="moon" aria-hidden="true"></div>
+<div class="moon" aria-hidden="true"><div class="moon-animation" id="moonAnimation"><span class="moon-fallback">😊</span></div></div>
 <div class="cloud c1" aria-hidden="true"></div>
 <div class="cloud c2" aria-hidden="true"></div>
 <canvas id="bg" aria-hidden="true"></canvas>
@@ -66,12 +74,12 @@
 
   <section class="cake-sec wrap" data-r>
     <div class="cake-stage"><span class="ring"></span><img class="cake" src="img/cake.svg" alt="Birthday cake"></div>
-    <button class="pill" id="wishBtn" type="button" onclick="const msg=document.getElementById('wishMsg');msg.textContent='তোমার সব ইচ্ছে পূরণ হোক Tuntuni —শুভ জন্মদিন, অনেক অনেক ভালোবাসা রইলো ❤️';msg.classList.add('pop');const blessId=blessMoon();if(typeof confetti==='function'){const shower=confetti({particleCount:120,spread:90,origin:{y:.7},colors:['#ffd27a','#ff7eb6','#7fe7ff','#ffffff']});if(shower&&shower.then)shower.then(()=>unblessMoon(blessId));else setTimeout(()=>unblessMoon(blessId),4000)}else setTimeout(()=>unblessMoon(blessId),4000)">Make a wish</button>
+    <button class="pill" id="wishBtn" type="button">Make a wish</button>
     <p class="wish" id="wishMsg" aria-live="polite"></p>
   </section>
 
   <section class="memories wrap" data-r>
-    <h2 class="sec-title">Our old memories</h2>
+    <h2 class="sec-title">Some memories</h2>
     <div class="stack" id="stack" aria-label="Photo memories">
       <figure class="polaroid"><img src="img/1.jpg" alt="Our memory 1" draggable="false"><figcaption>my favorite person ❤️</figcaption></figure>
       <figure class="polaroid"><img src="img/2.png" alt="Our memory 2" draggable="false"><figcaption>My Heroine</figcaption></figure>
@@ -106,7 +114,7 @@
           <h3>Happy Birthday</h3>
           <p>Tap the button to open this card</p>
           <img src="img/cake.svg" alt="">
-          <button class="pill dark" id="toggleButton" type="button" onclick="event.stopPropagation();const card=document.getElementById('card');const open=card.classList.toggle('flipped');this.textContent=open?'Close card':'Open card';this.setAttribute('aria-expanded',String(open))">Open card</button>
+          <button class="pill dark" id="toggleButton" type="button" onclick="event.stopPropagation();const card=document.getElementById('card');const open=card.classList.toggle('flipped');this.textContent=open?'Close card':'Open card';this.setAttribute('aria-expanded',String(open));window.setMoonCardOpen(open)">Open card</button>
         </div>
         <div class="side back">
           <h3>শুভ জন্মদিন, আমার মুন ❤️🌙</h3>
@@ -141,10 +149,91 @@
   <button class="music-toggle" id="musicToggle" type="button" aria-label="Open music controls" aria-expanded="false" onclick="const player=document.getElementById('musicPopup'),audio=document.getElementById('backgroundMusic'),open=player.hidden;player.hidden=!open;this.setAttribute('aria-expanded',String(open));if(open&&audio.paused)audio.play().catch(()=>{})"><img src="img/Oviman.png?rev=2" alt=""></button>
 </div>
 <script src="background.js"></script>
-<script src="main.js"></script>
+<script src="main.js?rev=scroll-aware-card-emoji"></script>
 <script>
-window.blessMoon=()=>{const moon=document.querySelector('.moon');moon.classList.add('blessed');return window.moonBlessToken=(window.moonBlessToken||0)+1;};
-window.unblessMoon=id=>{if(id===window.moonBlessToken)document.querySelector('.moon').classList.remove('blessed');};
+const moonAnimations={smile:'https://fonts.gstatic.com/s/e/notoemoji/latest/1f60a/lottie.json',letter:'https://fonts.gstatic.com/s/e/notoemoji/latest/1f970/lottie.json',memory:'https://fonts.gstatic.com/s/e/notoemoji/latest/1f60d/lottie.json',card:'https://fonts.gstatic.com/s/e/notoemoji/latest/1f618/lottie.json',end:'https://fonts.gstatic.com/s/e/notoemoji/latest/1f973/lottie.json',wish:'https://fonts.gstatic.com/s/e/notoemoji/latest/1f607/lottie.json'};
+const countdownMusicNote=document.getElementById('countdownMusicNote');
+if(countdownMusicNote&&window.lottie){
+  const noteAnimation=window.lottie.loadAnimation({container:countdownMusicNote,renderer:'svg',loop:true,autoplay:true,path:'https://fonts.gstatic.com/s/e/notoemoji/latest/1f3b6/lottie.json'});
+  noteAnimation.addEventListener('DOMLoaded',()=>countdownMusicNote.querySelector('.countdown-music-fallback')?.remove());
+}
+const countdownOkArrow=document.getElementById('countdownOkArrow');
+if(countdownOkArrow&&window.lottie){
+  const arrowAnimation=window.lottie.loadAnimation({container:countdownOkArrow,renderer:'svg',loop:true,autoplay:true,path:'./arrow.json'});
+  arrowAnimation.addEventListener('DOMLoaded',()=>countdownOkArrow.querySelector('.countdown-ok-fallback')?.remove());
+}
+let activeMoonAnimation='smile',activeMoonScene='hero',moonAnimationInstance=null,moonAnimationGeneration=0,moonAnimationController=null,moonWishActive=false,moonCardOpen=false;
+function moonFallbackEmoji(animation){
+  const url=moonAnimations[animation]||animation;
+  const match=url.match(/\/([0-9a-f]+(?:_[0-9a-f]+)*)\/lottie\.json/i);
+  if(!match)return String.fromCodePoint(0x1f60a);
+  try{return String.fromCodePoint(...match[1].split('_').map(code=>parseInt(code,16)));}
+  catch{return String.fromCodePoint(0x1f60a);}
+}
+window.blessMoon=()=>{moonWishActive=true;window.refreshMoonAnimation();return window.moonBlessToken=(window.moonBlessToken||0)+1;};
+window.unblessMoon=id=>{if(id===window.moonBlessToken){moonWishActive=false;window.refreshMoonAnimation();}};
+window.setMoonCardOpen=open=>{moonCardOpen=Boolean(open);window.refreshMoonAnimation();};
+window.initMoonAnimation=async()=>{
+  const mount=document.getElementById('moonAnimation');
+  if(!mount||mount.dataset.initialized||!window.lottie)return;
+  mount.dataset.initialized='true';
+  const previousOverlay=mount.querySelector('.moon-transition-out');
+  mount.replaceChildren();
+  const fallback=document.createElement('span');
+  fallback.className='moon-fallback';
+  fallback.textContent=activeMoonAnimation==='letter'?'🥰':'😊';
+  fallback.textContent=moonFallbackEmoji(activeMoonAnimation);
+  mount.append(fallback);
+  if(previousOverlay)mount.append(previousOverlay);
+  const generation=++moonAnimationGeneration;
+  moonAnimationController?.abort();
+  moonAnimationController=new AbortController();
+  try{
+    const response=await fetch(moonAnimations[activeMoonAnimation]||activeMoonAnimation,{signal:moonAnimationController.signal});
+    if(!response.ok)throw new Error(`Lottie request failed: ${response.status}`);
+    const animationData=await response.json();
+    if(generation!==moonAnimationGeneration||!mount.isConnected)return;
+    moonAnimationInstance=window.lottie.loadAnimation({container:mount,renderer:'svg',loop:true,autoplay:true,animationData,rendererSettings:{preserveAspectRatio:'xMidYMid meet'}});
+  }catch(error){
+    if(generation===moonAnimationGeneration)mount.dataset.initialized='';
+    return;
+  }
+  moonAnimationInstance.addEventListener('DOMLoaded',()=>{if(generation===moonAnimationGeneration)mount.querySelector('.moon-fallback')?.remove();});
+  moonAnimationInstance.addEventListener('data_failed',()=>{if(generation===moonAnimationGeneration)mount.dataset.initialized='';});
+};
+window.refreshMoonAnimation=()=>{
+  const next=moonWishActive?'wish':activeMoonScene==='end'?'end':moonCardOpen?'card':activeMoonScene==='letter'?'letter':activeMoonScene==='memory'?'memory':'smile';
+  if(next===activeMoonAnimation){
+    const fallback=document.querySelector('#moonAnimation .moon-fallback');
+    if(fallback)fallback.textContent=moonFallbackEmoji(next);
+    const mount=document.getElementById('moonAnimation');
+    if(mount&&!mount.dataset.initialized&&!moonAnimationInstance)window.initMoonAnimation();
+    return;
+  }
+  activeMoonAnimation=next;
+  const mount=document.getElementById('moonAnimation');
+  if(mount){
+    const previousOverlay=document.createElement('span');
+    previousOverlay.className='moon-transition-out';
+    [...mount.childNodes].forEach(node=>previousOverlay.append(node.cloneNode(true)));
+    moonAnimationGeneration++;
+    moonAnimationController?.abort();
+    moonAnimationInstance?.stop?.();
+    moonAnimationInstance?.destroy();
+    const freshMount=mount.cloneNode(false);
+    delete freshMount.dataset.initialized;
+    freshMount.append(previousOverlay);
+    mount.replaceWith(freshMount);
+    requestAnimationFrame(()=>previousOverlay.classList.add('fading'));
+    setTimeout(()=>previousOverlay.remove(),450);
+    window.initMoonAnimation();
+  }
+};
+window.setMoonAnimation=variant=>{
+  activeMoonScene=['letter','memory','card','end'].includes(variant)?variant:'hero';
+  if(activeMoonScene!=='card')moonCardOpen=false;
+  window.refreshMoonAnimation();
+};
 (() => {
   const audio=document.getElementById('backgroundMusic');
   const play=document.getElementById('musicPlay');
@@ -176,20 +265,42 @@ window.unblessMoon=id=>{if(id===window.moonBlessToken)document.querySelector('.m
   const countdown = document.getElementById('countdownScreen');
   const birthday = document.getElementById('birthdayContent');
   const fields = ['Days', 'Hours', 'Minutes', 'Seconds'].map(unit => document.getElementById(`count${unit}`));
-  const skipButton = document.getElementById('countdownSkip');
+  const actionCard = document.getElementById('countdownActionCard');
+  const okButton = document.getElementById('countdownOk');
+  const audio = document.getElementById('backgroundMusic');
   const pad = value => String(value).padStart(2, '0');
 
-  let skipped = false;
   let countdownTimer;
+  let unlockPreparing = false;
+  async function prepareBirthdayPage() {
+    const images = [...birthday.querySelectorAll('img')];
+    images.forEach(img => { img.loading = 'eager'; });
+    const imageLoads = images.map(async img => {
+      if (!img.complete) await new Promise(resolve => {
+        img.addEventListener('load', resolve, { once: true });
+        img.addEventListener('error', resolve, { once: true });
+      });
+      if (img.complete && img.naturalWidth && img.decode) await img.decode().catch(() => {});
+    });
+    const songReady = audio.readyState >= HTMLMediaElement.HAVE_ENOUGH_DATA
+      ? Promise.resolve()
+      : new Promise(resolve => {
+          audio.addEventListener('canplaythrough', resolve, { once: true });
+          audio.addEventListener('error', resolve, { once: true });
+        });
+    await Promise.all([...imageLoads, songReady, document.fonts?.ready]);
+    actionCard.hidden = false;
+  }
+
   function updateCountdown() {
-    const remaining = skipped ? 0 : unlockAt - Date.now();
+    const remaining = unlockAt - Date.now();
     if (remaining <= 0) {
-      countdown.hidden = true;
-      birthday.hidden = false;
-      birthday.inert = false;
-      document.body.classList.remove('countdown-mode');
-      window.startBirthdayMusic?.();
+      if (unlockPreparing) return;
+      unlockPreparing = true;
+      countdown.hidden = false;
+      document.getElementById('countdownTimerCard')?.remove();
       if (countdownTimer) clearInterval(countdownTimer);
+      prepareBirthdayPage();
       return;
     }
     document.body.classList.add('countdown-mode');
@@ -203,9 +314,19 @@ window.unblessMoon=id=>{if(id===window.moonBlessToken)document.querySelector('.m
     [days, hours, minutes, seconds].forEach((value, index) => { fields[index].textContent = pad(value); });
   }
 
-  skipButton.addEventListener('click', () => { skipped = true; updateCountdown(); });
+  okButton.addEventListener('click', () => {
+    okButton.hidden = true;
+    birthday.hidden = false;
+    birthday.inert = false;
+    document.body.classList.remove('countdown-mode');
+    window.updateMoonScene?.();
+    window.initMoonAnimation?.();
+    window.startBirthdayMusic?.();
+    countdown.remove();
+  });
+
   updateCountdown();
-  countdownTimer = setInterval(updateCountdown, 1000);
+  if (!unlockPreparing) countdownTimer = setInterval(updateCountdown, 1000);
 })();
 </script>
 </body>

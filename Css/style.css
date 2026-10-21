@@ -8,8 +8,13 @@ body{background:#0b1030;color:#fff;font-family:'Gabriela',sans-serif;overflow-x:
 .countdown-screen{position:relative;z-index:10;min-height:100vh;min-height:100svh;display:grid;place-items:center;padding:24px;background:linear-gradient(180deg,#16254d 0%,#463879 55%,#9e4eaa 100%);font-family:Arial,sans-serif;text-align:center}
 .countdown-screen::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(circle at 14% 16%,#fff9 0 1px,transparent 2px),radial-gradient(circle at 56% 8%,#fff8 0 1px,transparent 2px),radial-gradient(circle at 89% 23%,#fff9 0 1px,transparent 2px),radial-gradient(circle at 8% 72%,#fff8 0 1px,transparent 2px),radial-gradient(circle at 77% 83%,#fff9 0 1px,transparent 2px);background-size:320px 260px}
 .countdown-card{position:relative;width:min(100%,590px);padding:30px 22px 20px;border:1px solid rgba(255,255,255,.55);border-radius:30px;background:linear-gradient(145deg,rgba(255,255,255,.14),rgba(255,255,255,.08));box-shadow:0 18px 50px #100b3840;color:#fff}
+.countdown-screen{grid-template-columns:minmax(0,590px);grid-auto-rows:max-content;align-content:center;justify-content:center;gap:14px}
+.countdown-intro-card,.countdown-timer-card{width:100%}
+.countdown-action-card{display:grid;place-items:center;width:100%;padding:12px}
 .countdown-eyebrow{color:#fff0a8;font-size:.85rem;font-weight:700;letter-spacing:.22em}
 .countdown-card h1{margin:10px 0;color:#fff0a8;font-family:Georgia,serif;font-size:clamp(2.3rem,8vw,3.2rem);line-height:1.1}
+.countdown-music-note{display:inline-block;width:1em;height:1em;margin-left:.08em;vertical-align:-.14em;font-family:Arial,sans-serif;font-size:.9em;line-height:1}
+.countdown-music-note svg{width:100%;height:100%}
 .countdown-intro{max-width:500px;margin:14px auto 22px;font-size:.98rem;line-height:1.5}
 .countdown-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
 .countdown-unit{display:grid;place-items:center;gap:5px;min-height:88px;padding:10px 5px;border:1px solid #ffffff35;border-radius:20px;background:#26174fbf;box-shadow:inset 0 1px #ffffff22}
@@ -17,21 +22,30 @@ body{background:#0b1030;color:#fff;font-family:'Gabriela',sans-serif;overflow-x:
 .countdown-unit small{font-size:.67rem;font-weight:700}
 .countdown-footer{margin-top:24px;font-size:.92rem}
 .countdown-skip{margin-top:12px;padding:10px 18px;border:1px solid #ffffff80;border-radius:999px;background:#ffffff1c;color:#fff;font:600 .9rem Arial,sans-serif;cursor:pointer;transition:background .2s,transform .2s}
+.countdown-skip{display:grid;place-items:center;min-width:104px;min-height:58px;padding:4px 12px}
+.countdown-ok-arrow{display:block;width:76px;height:42px}
+.countdown-ok-arrow svg{display:block;width:100%;height:100%}
 .countdown-skip:hover{background:#ffffff35;transform:translateY(-1px)}
 .countdown-skip:focus-visible{outline:3px solid #fff0a8;outline-offset:3px}
 body.countdown-mode{overflow:hidden}
-body.countdown-mode .countdown-screen{position:fixed;inset:0}
+body.countdown-mode .countdown-screen{position:fixed;inset:0;overflow-y:auto;overscroll-behavior:contain;align-content:safe center;padding-block:clamp(12px,2.5vh,24px)}
 :focus-visible{outline:3px solid var(--gold);outline-offset:3px}
 img,svg{max-width:100%;height:auto}
 
 .sky,.moon,.cloud,#bg,.hills{position:fixed;pointer-events:none}
 .sky{inset:0;z-index:-6;background:linear-gradient(180deg,#070b2b 0%,#231a63 32%,#7b2f9a 60%,#e8588f 82%,#ffb37a 100%);animation:dusk 24s ease-in-out infinite alternate}
 @keyframes dusk{to{filter:hue-rotate(-28deg) saturate(1.15)}}
-.moon{z-index:-5;right:8vw;top:9vh;width:clamp(120px,26vw,260px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fffbe8,#ffe6a8 55%,#ffc98a);box-shadow:0 0 60px 20px rgba(255,220,150,.55),0 0 200px 80px rgba(255,150,200,.35);transform:translate(calc(var(--mx)*-22px),calc(var(--my)*-14px));animation:moonpulse 6s ease-in-out infinite}
-.moon.blessed{background:transparent;box-shadow:none;animation:none}
+.moon{z-index:-5;right:8vw;top:9vh;width:clamp(108px,23vw,235px);aspect-ratio:1;transform:translate(calc(var(--mx)*-22px),calc(var(--my)*-14px))}
+.moon-animation{position:relative;width:100%;height:100%;filter:drop-shadow(0 0 24px rgba(255,220,150,.7));animation:moonpulse 6s ease-in-out infinite}
+.moon-animation>svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.moon-fallback{position:absolute;inset:0;display:grid;place-items:center;font-size:clamp(90px,20vw,200px);line-height:1;filter:drop-shadow(0 0 22px rgba(255,235,155,.9))}
+.moon-transition-out{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:1;transform:scale(1);transition:opacity .42s ease,transform .42s ease}
+.moon-transition-out.fading{opacity:0;transform:scale(.92)}
+.moon-transition-out svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.moon.blessed .moon-animation{opacity:0;animation:none}
 .moon.blessed::before{content:"😇";position:absolute;inset:0;display:grid;place-items:center;font-size:clamp(100px,22vw,220px);line-height:1;filter:drop-shadow(0 0 22px rgba(255,235,155,.9));animation:blessedPop .45s cubic-bezier(.2,1.4,.4,1) both}
 @keyframes blessedPop{from{opacity:0;scale:.45;rotate:-18deg}to{opacity:1;scale:1;rotate:0deg}}
-@keyframes moonpulse{50%{box-shadow:0 0 80px 30px rgba(255,220,150,.7),0 0 240px 100px rgba(255,150,200,.45)}}
+@keyframes moonpulse{50%{transform:scale(1.04);filter:drop-shadow(0 0 38px rgba(255,220,150,.9))}}
 .cloud{left:0;width:200vw;z-index:-4;background-repeat:repeat-x;background-size:100vw 100%}
 .c1{top:22vh;height:34vh;opacity:.9;background-image:radial-gradient(ellipse 24% 38% at 15% 60%,rgba(255,255,255,.26),transparent 70%),radial-gradient(ellipse 30% 46% at 48% 45%,rgba(255,170,220,.24),transparent 70%),radial-gradient(ellipse 20% 34% at 80% 65%,rgba(255,255,255,.2),transparent 70%);animation:drift 70s linear infinite}
 .c2{top:52vh;height:40vh;background-image:radial-gradient(ellipse 30% 40% at 25% 55%,rgba(255,200,170,.3),transparent 70%),radial-gradient(ellipse 26% 36% at 70% 50%,rgba(255,255,255,.22),transparent 70%);animation:drift 45s linear infinite}
@@ -96,10 +110,13 @@ main{display:flex;flex-direction:column;align-items:center;gap:92px;padding:40px
 .pill.dark:hover{background:#a3204f;color:#fff}
 .wish{min-height:1.8em;font-family:'Dancing Script',cursive;font-size:1.7rem;color:var(--gold);text-shadow:0 0 14px rgba(255,210,122,.8)}
 .wish.pop{animation:fadeup .6s both}
+.wish.typing::after{content:"";display:inline-block;height:1em;margin-left:3px;border-right:2px solid currentColor;vertical-align:-.12em;animation:wishCaret .7s steps(1) infinite}
+@keyframes wishCaret{50%{opacity:0}}
 
 .stack{position:relative;width:min(70vw,290px);aspect-ratio:4/5;touch-action:pan-y;cursor:grab;user-select:none;perspective:1100px;transform-style:preserve-3d}
 .polaroid{position:absolute;inset:0;background:#fff;padding:12px 12px 0;border-radius:6px;box-shadow:0 22px 40px rgba(10,0,40,.55);display:flex;flex-direction:column;color:var(--ink);transition:transform .8s cubic-bezier(.22,.9,.28,1),opacity .8s,filter .8s;-webkit-backface-visibility:hidden;backface-visibility:hidden}
-.polaroid img{flex:1;min-height:0;width:100%;object-fit:contain;background:#f4edf2;border-radius:3px}
+.polaroid img{flex:1;min-height:0;width:100%;object-fit:contain;background:#f4edf2;border-radius:3px;transition:filter .8s}
+.polaroid[data-o="-1"] img,.polaroid[data-o="1"] img{filter:blur(2px) brightness(.82)}
 .polaroid figcaption{font-family:'Dancing Script',cursive;font-size:1.7rem;text-align:center;padding:8px 0 10px}
 .ctrl{display:flex;align-items:center;gap:22px;margin-top:36px}
 .round{width:54px;height:54px;border-radius:50%;border:0;background:linear-gradient(180deg,#ffe9a8,#ffb86b);color:#3a0f2a;font-size:1.9rem;line-height:1;cursor:pointer;box-shadow:0 5px 0 #c95c8a,0 12px 20px rgba(0,0,0,.35);transition:transform .15s,box-shadow .15s}
@@ -117,9 +134,9 @@ main{display:flex;flex-direction:column;align-items:center;gap:92px;padding:40px
 .back{background:linear-gradient(135deg,#cce7ff,#99d6ff);color:#2b5f8f;transform:rotateY(180deg);justify-content:center}
 .back h3{font-family:'Junkwar',sans-serif;font-weight:400;font-size:clamp(1.1rem,4.4vw,1.5rem);margin-bottom:14px}
 .back p{font-size:clamp(.9rem,2.6vw,1.05rem);line-height:1.55}
-.foot{text-align:center;padding:30px 20px 44px;border-top:1px solid rgba(255,255,255,.2);margin:0 auto;width:min(92vw,700px)}
-.foot p{font-family:'Cinzel Decorative',cursive;font-size:1rem;text-shadow:0 2px 10px rgba(0,0,0,.5)}
-.foot small{display:block;margin-top:8px;color:rgba(255,255,255,.8)}
+.foot{position:relative;z-index:2;text-align:center;padding:24px 20px 30px;border:1px solid rgba(255,255,255,.34);border-radius:18px;margin:0 auto 24px;width:min(92vw,700px);background:rgba(15,8,48,.92);box-shadow:0 12px 32px rgba(4,2,22,.4)}
+.foot p{font-family:Arial,sans-serif;font-size:clamp(1rem,2.8vw,1.2rem);font-weight:700;line-height:1.5;color:#fff;text-shadow:0 2px 4px #000}
+.foot small{display:block;margin-top:8px;color:#ffe5a3;font-family:Arial,sans-serif;font-size:.95rem;font-weight:600;line-height:1.5;text-shadow:0 1px 3px #000}
 
 #lanterns{position:fixed;inset:0;pointer-events:none;z-index:5;overflow:hidden}
 .lantern{position:absolute;bottom:-70px;width:34px;height:46px;border-radius:12px 12px 8px 8px;background:radial-gradient(circle at 50% 70%,#fff2b0,#ffb347 60%,#ff7a3d);box-shadow:0 0 24px 8px rgba(255,180,80,.7);animation:rise var(--t) ease-in forwards}
@@ -160,6 +177,19 @@ main{gap:64px;padding:32px 14px 56px}
 .letter{padding:32px 24px 28px 34px}
 .letter p{font-size:1rem;line-height:30px}
 .ctrl{gap:14px}
+}
+
+@media (max-height:760px){
+.countdown-card{padding:18px 18px 14px;border-radius:24px}
+.countdown-card h1{margin:5px 0;font-size:clamp(1.8rem,5vw,2.6rem)}
+.countdown-intro{margin:8px auto 12px;font-size:.9rem;line-height:1.35}
+.countdown-eyebrow{font-size:.75rem;letter-spacing:.16em}
+.countdown-grid{gap:8px}
+.countdown-unit{min-height:68px;padding:7px 4px;border-radius:16px}
+.countdown-unit span{font-size:1.7rem}
+.countdown-footer{margin-top:12px}
+.countdown-action-card{padding:9px}
+.countdown-skip{margin-top:0;padding:9px 16px}
 }
 
 @media (max-height:520px) and (orientation:landscape){
