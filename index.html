@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Happy Birthday Moon</title>
+<link rel="icon" id="siteFavicon" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Dancing+Script:wght@600&family=Great+Vibes&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="Css/style.css">
@@ -151,6 +152,27 @@
 <script src="background.js"></script>
 <script src="main.js?rev=scroll-aware-card-emoji"></script>
 <script>
+const siteFavicon=document.getElementById('siteFavicon');
+const faviconMount=document.createElement('div');
+faviconMount.setAttribute('aria-hidden','true');
+faviconMount.style.cssText='position:fixed;left:-100px;top:-100px;width:32px;height:32px;overflow:hidden;pointer-events:none';
+document.body.append(faviconMount);
+if(window.lottie&&siteFavicon){
+  siteFavicon.href='data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><text y=".9em" font-size="56">🥳</text></svg>');
+  const faviconAnimation=window.lottie.loadAnimation({container:faviconMount,renderer:'canvas',loop:true,autoplay:true,path:'https://fonts.gstatic.com/s/e/notoemoji/latest/1f973/lottie.json',rendererSettings:{dpr:1,clearCanvas:true,preserveAspectRatio:'xMidYMid meet'}});
+  faviconAnimation.addEventListener('DOMLoaded',()=>{
+    let lastUpdate=0;
+    const updateFavicon=now=>{
+      if(now-lastUpdate>=140){
+        const canvas=faviconMount.querySelector('canvas');
+        if(canvas){try{siteFavicon.href=canvas.toDataURL('image/png');}catch{}}
+        lastUpdate=now;
+      }
+      requestAnimationFrame(updateFavicon);
+    };
+    requestAnimationFrame(updateFavicon);
+  });
+}
 const moonAnimations={smile:'https://fonts.gstatic.com/s/e/notoemoji/latest/1f60a/lottie.json',letter:'https://fonts.gstatic.com/s/e/notoemoji/latest/1f970/lottie.json',memory:'https://fonts.gstatic.com/s/e/notoemoji/latest/1f60d/lottie.json',card:'https://fonts.gstatic.com/s/e/notoemoji/latest/1f618/lottie.json',end:'https://fonts.gstatic.com/s/e/notoemoji/latest/1f973/lottie.json',wish:'https://fonts.gstatic.com/s/e/notoemoji/latest/1f607/lottie.json'};
 const countdownMusicNote=document.getElementById('countdownMusicNote');
 if(countdownMusicNote&&window.lottie){
